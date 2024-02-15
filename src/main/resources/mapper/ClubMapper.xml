@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hclub.hyndai.mapper.ClubMapper">
+
+    <select id="getClubList" resultType="site.hclub.hyndai.dto.ClubDTO"
+            parameterType="site.hclub.hyndai.domain.ClubVO">
+       <include refid="getClubBase"></include>
+    </select>
+    <sql id="getClubBase">
+    SELECT
+	     CLUB_NO AS clubNo
+	     , CLUB_NAME as clubName
+	     , CLUB_IMAGE as clubImage
+	     , CLUB_INFO as clubInfo
+	     , CLUB_LOC as clubLoc
+	     , CREATED_AT as createdAt
+	     , MODIFIED_AT as modifiedAt
+	     , USE_YN as useYn
+	     , CATEGORY_ID as categoryId
+	 FROM CLUB
+    </sql>
+    <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
+    	SELECT 
+    		COUNT(*) 
+    	FROM(
+    		<include refid="getClubBase"></include>
+    	)T1
+    </select>
+    <delete id="deleteClubInfo" parameterType="String">
+    	DELETE 
+    	FROM	CLUB
+    		WHERE CLUB_NO = #{clubNo}
+    </delete>
+    <update id="updateClubUseYn" parameterType="String">
+    	UPDATE
+    		CLUB
+    	SET 
+    		USE_YN = 'Y'
+    	WHERE CLUB_NO = #{clubNo}
+    </update>
+
+
+</mapper>
