@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import site.hclub.hyndai.service.MemberService;
 import lombok.extern.log4j.Log4j;
 import site.hclub.hyndai.common.response.ApiResponse;
 import site.hclub.hyndai.domain.ClubVO;
 import site.hclub.hyndai.dto.ClubDTO;
+import site.hclub.hyndai.dto.MemberDTO;
 import site.hclub.hyndai.service.ClubService;
 
 /**
@@ -35,6 +36,9 @@ public class AdminController {
 
 	@Autowired
 	private ClubService clubService;
+	
+	@Autowired
+	private MemberService MemberService;
 	
 	 @GetMapping("/club")
 	 public ResponseEntity<ApiResponse<List<ClubDTO>>> getClubList(@RequestBody ClubVO cvo) {
@@ -56,5 +60,10 @@ public class AdminController {
 		 
 		 return ApiResponse.success(UPDATE_CLUB_USE_YN_SUCCESS, clubService.updateClubUseYn(clubNo));
 	 }
-	 
+	 @GetMapping("/rank")
+	 public ResponseEntity<ApiResponse<List<MemberDTO>>> getRatingRankList(@RequestBody MemberDTO mdto) {
+		 
+		 return ApiResponse.success(GET_MEMBER_LIST_SUCCESS, MemberService.getRatingRankList(mdto));
+	
+	 }
 }

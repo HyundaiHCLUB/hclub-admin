@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hclub.hyndai.mapper.MemberMapper">
+
+	<select id="getRatingRankList" parameterType="site.hclub.hyndai.dto.MemberDTO" resultType="site.hclub.hyndai.dto.MemberDTO">
+		<include refid="getMemberBase"></include>
+		ORDER BY MEMBER_RATING DESC
+	</select>
+	<sql id="getMemberBase">
+	  SELECT 
+		    MEMBER_NO as memberNo
+		    , MEMBER_ID as memberId
+		    , MEMBER_IMAGE as memberImage
+		    , MEMBER_INTEREST as memberInterest
+		    , MEMBER_RATING as memberRating
+		    , EMPLOYEE_NO as employeeNo
+		    , MEMBER_PW as memberPw
+		    , ADMIN_YN as adminYn
+		FROM MEMBER
+	</sql>
+</mapper>
