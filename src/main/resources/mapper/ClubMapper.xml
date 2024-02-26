@@ -9,17 +9,20 @@
        <include refid="getClubBase"></include>
     </select>
     <sql id="getClubBase">
-    SELECT
-	     CLUB_NO AS clubNo
-	     , CLUB_NAME as clubName
-	     , CLUB_IMAGE as clubImage
-	     , CLUB_INFO as clubInfo
-	     , CLUB_LOC as clubLoc
-	     , CREATED_AT as createdAt
-	     , MODIFIED_AT as modifiedAt
-	     , USE_YN as useYn
-	     , CATEGORY_ID as categoryId
-	 FROM CLUB
+	   SELECT
+		     C.CLUB_NO AS clubNo
+		     , C.CLUB_NAME as clubName
+		     , C.CLUB_IMAGE as clubImage
+		     , C.CLUB_INFO as clubInfo
+		     , C.CLUB_LOC as clubLoc
+		     , C.CREATED_AT as createdAt
+		     , C.MODIFIED_AT as modifiedAt
+		     , C.USE_YN as useYn
+		     , C.CATEGORY_ID as categoryId
+	         , CA.CATEGORY_NAME as categoryName
+		 FROM CLUB  C
+	     INNER JOIN CATEGORY CA
+	     ON CA.category_id = C.CATEGORY_ID
     </sql>
     <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
     	SELECT 
