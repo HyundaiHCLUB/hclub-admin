@@ -19,7 +19,19 @@
 <script src="${pageContext.request.contextPath}/resources/plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
-
+<style>
+	#deleteButton
+	{
+	    margin: 10px 0px 10px 72%;
+	    border: 1px solid #F15F5F;
+	    width: fit-content;
+    	padding: 7px 10px 7px 10px;
+    	border-radius: 10px;
+    	cursor: pointer;
+    	color: white;
+    	background-color: #F15F5F;
+	}
+</style>
 <body>
 <body>
   <div class="layer"></div>
@@ -73,7 +85,9 @@
 	</div>
    </nav>
    <div class="container">
+   <div id="deleteButton" onclic="deleteClub()">삭제</div>
     <div class="row">
+    	
     	<div class="col-lg-9" style="margin: 0px 0px 0px 50px">  
           <div class="users-table table-wrapper">
               <table class="posts-table">
@@ -130,7 +144,7 @@
  $(document).ready(function() {
  
  });
- getClubList();
+  getClubList(); //초기 화면 로딩
  
  function getClubList() { 
 	    var params = {}; // ClubVO 객체를 생성하고 필요한 데이터를 추가해야 합니다.
@@ -162,7 +176,7 @@
 	    var tbody = $('#dataTbody'); // 테이블의 tbody 요소를 선택합니다. 해당 테이블 ID에 맞게 변경해야 합니다.
 	   
 	    var tr = $('<tr>'); 
-	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check"></label></td>'); // 체크박스 열 추가
+	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check" name="check"></label></td>'); // 체크박스 열 추가
 	    tr.append('<td>'+data.clubNo+'</td>'); // ID 열 추가
 	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 열 추가
 	    tr.append('<td><div class="categories-table-img"><picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture></div></td>'); // 이미지 열 추가
@@ -201,7 +215,9 @@
 	    });
 	} 
  }
-
+ function deleteClub(){
+	 
+ }
 
  </script>
 </body>

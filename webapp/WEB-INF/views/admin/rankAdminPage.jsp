@@ -84,15 +84,12 @@
                         <input type="checkbox" class="check-all">
                       </label>
                     </th>
-                    <th>번호</th>
-                    <th>동아리 이름</th>
-                    <th>동아리 사진</th>
-                    <th>동아리 소개</th>
-                    <th>활동 지역</th>
-                    <th>활성 여부</th>
-                    <th>카테고리</th>
-                    <th>등록 날짜</th>
-                    <th>수정 날짜</th>
+                    <th>사원번호</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>사원 사진</th>
+                    <th>레이팅 점수</th>
+                    <th>경기 횟수</th>
                   </tr>
                 </thead>
                 <tbody id="dataTbody">
@@ -130,48 +127,44 @@
  $(document).ready(function() {
  
  });
- getClubList();
- function getClubList() { 
-	    var params = {}; // ClubVO 객체를 생성하고 필요한 데이터를 추가해야 합니다.
+ getRankingList();
+ function getRankingList() { 
+	    var params = {}; // 
 		$.ajax({
 			type: 'POST',
 			/* headers: {
 		     'Authorization': 'Bearer ' + accessToken // accessToken 사용
 			}, */
-		    url: '/admin/club', // URL을 '/club'로 변경합니다.
-		    data: JSON.stringify(params), // ClubVO 객체를 JSON 문자열로 변환하여 전송합니다.
-			contentType: 'application/json', // 전송하는 데이터의 타입을 명시합니다.
+		    url: '/admin/rank', 
+		    data: JSON.stringify(params),
+			contentType: 'application/json',
 			success: function(response) {
 	            console.log('개인 랭킹 리스트 정보 가져오기 성공');
-	         //  console.log(response.data);
+	            //console.log(response.data);
 	            var list = response.data;
 	            
 	            for(var i = 0 ; i < list.length; i++){
-	            	//appendDataToTable(list[i]);
+	            	appendDataToTable(list[i]);
 	            }
 	        },
 	        error: function(xhr, status, error) {
-	            console.error('동아리 리스트 정보 가져오기 실패:', error);
+	            console.error('개인 랭킹 리스트 정보 가져오기 실패:', error);
 	        }
 	    });
 	}
  function appendDataToTable(data) {
-	    var tbody = $('#dataTbody'); // 테이블의 tbody 요소를 선택합니다. 해당 테이블 ID에 맞게 변경해야 합니다.
-	    
-	    // 새로운 행(tr) 요소를 생성하고 데이터를 추가합니다.
+	    var tbody = $('#dataTbody'); 
+	 
 	    var tr = $('<tr>'); 
-	    
-	    // 각 열(td)에 데이터를 추가합니다.
+
 	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check"></label></td>'); // 체크박스 열 추가
-	    tr.append('<td>'+data.clubNo+'</td>'); // ID 열 추가
-	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 열 추가
-	    tr.append('<td><div class="categories-table-img"><picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture></div></td>'); // 이미지 열 추가
-	    tr.append('<td>'+data.clubInfo+'</td>'); // 상태 열 추가
-	    tr.append('<td>'+data.clubLoc+'</td>'); // 위치 열 추가
-	    tr.append('<td><span class="badge-active">'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
-	    tr.append('<td>'+data.categoryName+'</td>'); // 카테고리 열 추가
-	    tr.append('<td>'+data.createdAt+'</td>'); // 생성일 열 추가
-	    tr.append('<td>'+data.modifiedAt+'</td>'); // 수정일 열 추가
+	    tr.append('<td>'+data.employeeNo+'</td>'); // 사원번호
+	    tr.append('<td>'+data.memberId+'</td>'); // 아이디
+	    tr.append('<td>'+data.employeeName+'</td>'); // 이름
+	    tr.append('<td>'+data.memberImage+'</td>'); // 이미지
+	    tr.append('<td>'+data.memberRating+'</td>'); // 카테고리 열 추가
+	    tr.append('<td>'+data.matchNum+'</td>'); // 회원가입일 열 추가
+	   
 	    
 	    tbody.append(tr); // 행을 테이블에 추가합니다.
 	}

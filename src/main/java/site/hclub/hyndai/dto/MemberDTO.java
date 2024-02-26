@@ -45,5 +45,17 @@ public class MemberDTO {
     관리자여부
     */
    private String adminYn ;
+   /**
+    매치 횟수
+   */
+   private String matchNum;
+   /**
+    열 수
+   */
+   private String ROWNUM;
+   /**
+    사원 이름
+   */
+   private String employeeName;
 
 }

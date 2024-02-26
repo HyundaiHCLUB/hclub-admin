@@ -52,17 +52,22 @@ public class AdminController {
 		 
 		 return ApiResponse.success(GET_CLUB_LIST_CNT_SUCCESS, clubService.getClubCnt(cvo));
 	 }
-	 @DeleteMapping("/club/{clubNo}")
-	 public ResponseEntity<ApiResponse<Integer>> deleteClubInfo(@PathVariable String clubNo) {
+	 @DeleteMapping("/club")
+	 public ResponseEntity<ApiResponse<Integer>> deleteClubInfo(@RequestBody List<String> clubNoList) {
+		 int result = -1;
 		 
-		 return ApiResponse.success(DELETE_CLUB_INFO_SUCCESS, clubService.deleteClubInfo(clubNo));
+		 for(String clubNo: clubNoList) {
+			 result=  clubService.deleteClubInfo(clubNo);
+		 }
+		 
+		 return ApiResponse.success(DELETE_CLUB_INFO_SUCCESS, result);
 	 }
 	 @GetMapping("/club/updateUseYn/{clubNo}")
 	 public ResponseEntity<ApiResponse<Integer>> updateClubUseYn(@PathVariable String clubNo) {
 		 
 		 return ApiResponse.success(UPDATE_CLUB_USE_YN_SUCCESS, clubService.updateClubUseYn(clubNo));
 	 }
-	 @GetMapping("/rank")
+	 @PostMapping("/rank")
 	 public ResponseEntity<ApiResponse<List<MemberDTO>>> getRatingRankList(@RequestBody MemberDTO mdto) {
 		 
 		 return ApiResponse.success(GET_MEMBER_LIST_SUCCESS, MemberService.getRatingRankList(mdto));

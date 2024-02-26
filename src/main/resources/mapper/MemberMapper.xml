@@ -5,19 +5,39 @@
 <mapper namespace="site.hclub.hyndai.mapper.MemberMapper">
 
 	<select id="getRatingRankList" parameterType="site.hclub.hyndai.dto.MemberDTO" resultType="site.hclub.hyndai.dto.MemberDTO">
-		<include refid="getMemberBase"></include>
-		ORDER BY MEMBER_RATING DESC
+		 SELECT 
+		 	 ROWNUM 
+        	, T1.memberNo
+        	, T1.memberId
+        	, T1.memberImage
+        	, T1. memberInterest
+        	, T1.memberRating
+        	, T1.employeeNo
+        	, T1.adminYn
+        	, T1.matchNum
+        	, E.EMPLOYEE_NAME AS employeeName
+		 FROM (
+			<include refid="getMemberBase"></include>
+		 ) T1
+		 INNER JOIN EMPLOYEE E
+    	ON E.EMPLOYEE_NO = T1.employeeNo
+		
 	</select>
 	<sql id="getMemberBase">
 	  SELECT 
-		    MEMBER_NO as memberNo
-		    , MEMBER_ID as memberId
-		    , MEMBER_IMAGE as memberImage
-		    , MEMBER_INTEREST as memberInterest
-		    , MEMBER_RATING as memberRating
-		    , EMPLOYEE_NO as employeeNo
-		    , MEMBER_PW as memberPw
-		    , ADMIN_YN as adminYn
-		FROM MEMBER
+		    M.MEMBER_NO as memberNo
+		    , M.MEMBER_ID as memberId
+		    , M.MEMBER_IMAGE as memberImage
+		    , M.MEMBER_INTEREST as memberInterest
+		    , M.MEMBER_RATING as memberRating
+		    , M.EMPLOYEE_NO as employeeNo
+		    , M.MEMBER_PW as memberPw
+		    , M.ADMIN_YN as adminYn
+            , (SELECT  COUNT(*)
+                FROM MEMBER_TEAM MT
+                WHERE MT.MEMBER_NO = M.MEMBER_NO
+             ) AS matchNum
+		FROM MEMBER M
+		ORDER BY MEMBER_RATING DESC 
 	</sql>
 </mapper>
