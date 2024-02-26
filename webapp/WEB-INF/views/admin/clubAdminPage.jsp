@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,76 +69,82 @@
    </nav>
    <div class="container">
     <div class="row">
-          <div class="col-lg-9">
-          
-            <div class="users-table table-wrapper">
+    	<div class="col-lg-9">  
+          <div class="users-table table-wrapper">
               <table class="posts-table">
                 <thead>
                   <tr class="users-table-info">
-                    <th>
+                  	<th>
                       <label class="users-table__checkbox ms-20">
-                        <input type="checkbox" class="check-all">Thumbnail
+                        <input type="checkbox" class="check-all">
                       </label>
                     </th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Action</th>
+                    <th>번호</th>
+                    <th>동아리 이름</th>
+                    <th>동아리 사진</th>
+                    <th>동아리 소개</th>
+                    <th>활동 지역</th>
+                    <th>활성 여부</th>
+                    <th>카테고리</th>
+                    <th>등록 날짜</th>
+                    <th>수정 날짜</th>
                   </tr>
                 </thead>
                 <tbody>
-                
-                 
                   <tr>
-                    <td>
+                  	 <td>
                       <label class="users-table__checkbox">
                         <input type="checkbox" class="check">
-                        <div class="categories-table-img">
-                          <picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture>
-                        </div>
                       </label>
                     </td>
                     <td>
-                      Helping a local business reinvent itself
+                    	1
                     </td>
                     <td>
-                      <div class="pages-table-img">
-                        <picture><source srcset="${pageContext.request.contextPath}/resources/img/avatar/avatar-face-02.webp" type="image/webp"><img src="./img/avatar/avatar-face-02.png" alt="User Name"></picture>
-                        Kathryn Murphy
-                      </div>
+                      라이즈 동아리
+                    </td>
+                    <td>
+						<div class="categories-table-img">
+                          <picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture>
+                        </div>
                     </td>
                     <td><span class="badge-active">상태</span></td>
-                    <td>17.04.2021</td>
-                    <td>
-                      <span class="p-relative">
-                        <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                          <div class="sr-only">More info</div>
-                          <i data-feather="more-horizontal" aria-hidden="true"></i>
-                        </button>
-                        <ul class="users-item-dropdown dropdown">
-                          <li><a href="##">Edit</a></li>
-                          <li><a href="##">Quick edit</a></li>
-                          <li><a href="##">Trash</a></li>
-                        </ul>
-                      </span>
-                    </td>
+                    <td>서울</td>
+                    <td>Y</td>
+                    <td>액티비티</td>
+                    <td> 2021-04-21 </td>
+                    <td> 2021-04-21 </td>
                   </tr>
-                  
-                 
-  
                 </tbody>
               </table>
             </div>
-   
-
+    	</div>
     </div>
-    </div>
-
- 
   </div>
+ <script>
+ $(document).ready(function() {
+ 
+ });
+ getClubList();
+ function getClubList() { 
+	    var params = {}; // ClubVO 객체를 생성하고 필요한 데이터를 추가해야 합니다.
+		$.ajax({
+			type: 'POST',
+			/* headers: {
+		     'Authorization': 'Bearer ' + accessToken // accessToken 사용
+			}, */
+		    url: '/admin/club', // URL을 '/club'로 변경합니다.
+		    data: JSON.stringify(params), // ClubVO 객체를 JSON 문자열로 변환하여 전송합니다.
+			contentType: 'application/json', // 전송하는 데이터의 타입을 명시합니다.
+			success: function(response) {
+	            console.log('동아리 리스트 정보 가져오기 성공', response);
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('동아리 리스트 정보 가져오기 실패:', error);
+	        }
+	    });
+	}
 
-<!-- Chart library -->
-
+ </script>
 </body>
 </html>

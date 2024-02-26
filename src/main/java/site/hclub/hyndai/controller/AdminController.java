@@ -42,12 +42,12 @@ public class AdminController {
 	@Autowired
 	private MemberService MemberService;
 	
-	 @GetMapping("/club")
+	 @PostMapping("/club")
 	 public ResponseEntity<ApiResponse<List<ClubDTO>>> getClubList(@RequestBody ClubVO cvo) {
 		 
 		 return ApiResponse.success(GET_CLUB_LIST_SUCCESS, clubService.getClubList(cvo));
 	 }
-	 @GetMapping("/clubCnt")
+	 @PostMapping("/clubCnt")
 	 public ResponseEntity<ApiResponse<Integer>> getClubCnt(@RequestBody ClubVO cvo) {
 		 
 		 return ApiResponse.success(GET_CLUB_LIST_CNT_SUCCESS, clubService.getClubCnt(cvo));

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,31 +69,37 @@
    </nav>
    <div class="container">
     <div class="row">
-          <div class="col-lg-9">
-          
-            <div class="users-table table-wrapper">
+    	<div class="col-lg-9">  
+          <div class="users-table table-wrapper">
               <table class="posts-table">
                 <thead>
                   <tr class="users-table-info">
-                    <th>
+                  	<th>
                       <label class="users-table__checkbox ms-20">
-                        <input type="checkbox" class="check-all">Thumbnail
+                        <input type="checkbox" class="check-all">
                       </label>
+                    </th>
+                    <th>
+                    	Thumbnail
                     </th>
                     <th>Title</th>
                     <th>Author</th>
                     <th>Status</th>
                     <th>Date</th>
                     <th>Action</th>
+                    <th>TEST</th>
                   </tr>
                 </thead>
                 <tbody>
-                
-                 
                   <tr>
-                    <td>
+                  	 <td>
                       <label class="users-table__checkbox">
                         <input type="checkbox" class="check">
+                      </label>
+                    </td>
+                    <td>
+                      <label class="users-table__checkbox">
+
                         <div class="categories-table-img">
                           <picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture>
                         </div>
@@ -121,22 +129,34 @@
                         </ul>
                       </span>
                     </td>
+                    <td>테스트</td>
                   </tr>
-                  
-                 
-  
                 </tbody>
               </table>
             </div>
-   
-
+    	</div>
     </div>
-    </div>
-
- 
   </div>
-
-<!-- Chart library -->
-
+ <script>
+ $(document).ready(function() {
+ 
+ });
+ 
+function getUserInfo(accessToken) { 
+	$.ajax({
+		type: 'POST',
+	    url: 'https://www.h-club.site/auth/test',
+		headers: {
+	     'Authorization': 'Bearer ' + accessToken // accessToken 사용
+	},
+	success: function(memberInfo) {
+          console.log('사용자 정보:', memberInfo);
+    },
+    error: function(xhr, status, error) {
+          console.error('사용자 정보 가져오기 실패:', error);
+       }
+    });
+}
+ </script>
 </body>
 </html>
