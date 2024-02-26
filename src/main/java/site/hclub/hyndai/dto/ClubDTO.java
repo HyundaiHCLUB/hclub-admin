@@ -54,4 +54,8 @@ public class ClubDTO {
 	 카테고리 이름
 	 */
 	private String categoryName;
+	/**
+	 번호 이름
+	 */
+	private String rowNum;
 }

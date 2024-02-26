@@ -131,7 +131,6 @@
  
  });
  getClubList();
- 
  function getClubList() { 
 	    var params = {}; // ClubVO 객체를 생성하고 필요한 데이터를 추가해야 합니다.
 		$.ajax({
@@ -139,68 +138,43 @@
 			/* headers: {
 		     'Authorization': 'Bearer ' + accessToken // accessToken 사용
 			}, */
-		    url: '/admin/club', 
-		    data: JSON.stringify(params),
-			contentType: 'application/json', 
+		    url: '/admin/club', // URL을 '/club'로 변경합니다.
+		    data: JSON.stringify(params), // ClubVO 객체를 JSON 문자열로 변환하여 전송합니다.
+			contentType: 'application/json', // 전송하는 데이터의 타입을 명시합니다.
 			success: function(response) {
-	            console.log('동아리 리스트 정보 가져오기 성공');
+	            console.log('개인 랭킹 리스트 정보 가져오기 성공');
 	         //  console.log(response.data);
-	            
-	            $('#dataTbody').empty();//재로딩을 위해 tbody안의 요소를 비운다음에 append
-	            
 	            var list = response.data;
+	            
 	            for(var i = 0 ; i < list.length; i++){
-	            	appendDataToTable(list[i]);
+	            	//appendDataToTable(list[i]);
 	            }
 	        },
 	        error: function(xhr, status, error) {
 	            console.error('동아리 리스트 정보 가져오기 실패:', error);
 	        }
 	    });
-}
+	}
  function appendDataToTable(data) {
 	    var tbody = $('#dataTbody'); // 테이블의 tbody 요소를 선택합니다. 해당 테이블 ID에 맞게 변경해야 합니다.
-	   
+	    
+	    // 새로운 행(tr) 요소를 생성하고 데이터를 추가합니다.
 	    var tr = $('<tr>'); 
+	    
+	    // 각 열(td)에 데이터를 추가합니다.
 	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check"></label></td>'); // 체크박스 열 추가
 	    tr.append('<td>'+data.clubNo+'</td>'); // ID 열 추가
 	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 열 추가
 	    tr.append('<td><div class="categories-table-img"><picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture></div></td>'); // 이미지 열 추가
 	    tr.append('<td>'+data.clubInfo+'</td>'); // 상태 열 추가
 	    tr.append('<td>'+data.clubLoc+'</td>'); // 위치 열 추가
-	    if(data.useYn == 'Y'){
-	        tr.append('<td style="text-align:center"><span>'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
-	    }else{
-	        tr.append('<td><span class="badge-active" style="cursor:pointer" onclick="updateUseYn('+data.clubNo+')">'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
-	    }
+	    tr.append('<td><span class="badge-active">'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
 	    tr.append('<td>'+data.categoryName+'</td>'); // 카테고리 열 추가
 	    tr.append('<td>'+data.createdAt+'</td>'); // 생성일 열 추가
 	    tr.append('<td>'+data.modifiedAt+'</td>'); // 수정일 열 추가
 	    
 	    tbody.append(tr); // 행을 테이블에 추가합니다.
-}
- function updateUseYn(clubNo){
-	 console.log("clubNo: "+ clubNo);
-	 var result = window.confirm("해당 동아리를 승인 하시겠습니까??");
-
-	if (result) {
-		$.ajax({
-			type: 'GET',
-			/* headers: {
-		     'Authorization': 'Bearer ' + accessToken // accessToken 사용
-			}, */
-		    url: '/admin/club/updateUseYn/'+clubNo, 
-			contentType: 'application/json', 
-			success: function(response) {
-	         	console.log('동아리 승인 업데이트 성공: '+response);
-	         	getClubList();//업데이트 후 데이터 재 로딩
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('동아리 승인 업데이트 실패: ', error);
-	        }
-	    });
-	} 
- }
+	}
 
 
  </script>

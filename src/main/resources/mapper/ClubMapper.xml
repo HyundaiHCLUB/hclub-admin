@@ -6,23 +6,41 @@
 
     <select id="getClubList" resultType="site.hclub.hyndai.dto.ClubDTO"
             parameterType="site.hclub.hyndai.domain.ClubVO">
-       <include refid="getClubBase"></include>
+            
+         SELECT  
+         	ROWNUM
+         	, T1.clubNo
+         	, T1.clubName
+         	, T1.clubImage
+         	, T1.clubInfo
+         	, T1.clubLoc
+         	, T1.createdAt
+         	, T1.modifiedAt
+         	, T1.useYn
+         	, T1.categoryId
+         	, T1.categoryName
+         FROM(
+       		<include refid="getClubBase"></include>
+       	)T1
+       	WHERE ROWNUM BETWEEN 1 AND 10
+    
     </select>
     <sql id="getClubBase">
-	   SELECT
-		     C.CLUB_NO AS clubNo
+	  SELECT
+	         C.CLUB_NO AS clubNo
 		     , C.CLUB_NAME as clubName
 		     , C.CLUB_IMAGE as clubImage
 		     , C.CLUB_INFO as clubInfo
 		     , C.CLUB_LOC as clubLoc
-		     , C.CREATED_AT as createdAt
-		     , C.MODIFIED_AT as modifiedAt
+		     , TO_CHAR(C.CREATED_AT,'YYYY-MM-DD') as createdAt
+		     , TO_CHAR(C.MODIFIED_AT,'YYYY-MM-DD') as modifiedAt
 		     , C.USE_YN as useYn
 		     , C.CATEGORY_ID as categoryId
-	         , CA.CATEGORY_NAME as categoryName
+	         , CA.CATEGORY_NAME AS categoryName
 		 FROM CLUB  C
 	     INNER JOIN CATEGORY CA
 	     ON CA.category_id = C.CATEGORY_ID
+	     order by clubNo desc
     </sql>
     <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
     	SELECT 

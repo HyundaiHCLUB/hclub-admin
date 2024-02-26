@@ -75,4 +75,11 @@ public class AdminController {
 		   
 		  return mv;
 	 }
+	 @GetMapping("/rankAdminPage")
+	 public ModelAndView rankAdminPage() {
+		   ModelAndView mv  = new ModelAndView();
+		   mv.setViewName("admin/rankAdminPage");
+		   
+		  return mv;
+	 }
 }
