@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import site.hclub.hyndai.service.MemberService;
 import lombok.extern.log4j.Log4j;
 import site.hclub.hyndai.common.response.ApiResponse;
@@ -65,5 +67,12 @@ public class AdminController {
 		 
 		 return ApiResponse.success(GET_MEMBER_LIST_SUCCESS, MemberService.getRatingRankList(mdto));
 	
+	 }
+	 @GetMapping("/clubAdminPage")
+	 public ModelAndView clubAdminPage() {
+		   ModelAndView mv  = new ModelAndView();
+		   mv.setViewName("admin/clubAdminPage");
+		   
+		  return mv;
 	 }
 }
