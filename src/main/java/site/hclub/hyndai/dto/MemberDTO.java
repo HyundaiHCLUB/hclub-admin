@@ -12,7 +12,7 @@ import lombok.Data;
  * ===========================
  */
 @Data
-public class MemberDTO {
+public class MemberDTO extends CommonDTO {
 	/**
     멤버 번호 
    */

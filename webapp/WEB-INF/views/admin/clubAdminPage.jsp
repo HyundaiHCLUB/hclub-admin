@@ -77,10 +77,13 @@
    <nav class="main-nav--bg">
    <div class="container main-nav">
 	   <div class="main-nav-start">
-	   <div class="search-wrapper">
+	  
+	  <div class="search-wrapper" style="margin-left:50px; display:inline-block;">
 	       <i data-feather="search" aria-hidden="true"></i>
-	        <input type="text" placeholder="Enter keywords ..." required>
+	        <input type="text" placeholder="동아리 이름으로 검색하세요" required id="search">
+	        
 	    </div>
+	    <div style="display:inline-block; cursor:pointer;"><input type="button" value="검색" style="font-weight:bold; cursor:pointer; color:dodgerblue;" onclick="getClubList()"></div>
 	   </div>  
 	</div>
    </nav>
@@ -139,15 +142,25 @@
             </div>
     	</div>
     </div>
+     <div id="paging">
+    </div>
   </div>
  <script>
  $(document).ready(function() {
  
+	 $('#search').on('keypress', function(e) {
+	        if(e.which === 13) {
+	            e.preventDefault();
+	            getClubList();
+	        }
+	    });
  });
   getClubList(); //초기 화면 로딩
  
  function getClubList() { 
-	    var params = {}; // ClubVO 객체를 생성하고 필요한 데이터를 추가해야 합니다.
+	    var params = {}; // 
+	    params.searchParams= $("#search").val();
+	    
 		$.ajax({
 			type: 'POST',
 			/* headers: {
@@ -158,8 +171,6 @@
 			contentType: 'application/json', 
 			success: function(response) {
 	            console.log('동아리 리스트 정보 가져오기 성공');
-	         //  console.log(response.data);
-	            
 	            $('#dataTbody').empty();//재로딩을 위해 tbody안의 요소를 비운다음에 append
 	            
 	            var list = response.data;
@@ -173,25 +184,25 @@
 	    });
 }
  function appendDataToTable(data) {
-	    var tbody = $('#dataTbody'); // 테이블의 tbody 요소를 선택합니다. 해당 테이블 ID에 맞게 변경해야 합니다.
+	    var tbody = $('#dataTbody');
 	   
 	    var tr = $('<tr>'); 
 	   /*  tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check" name="check" value="'+data.clubNo+'"></label></td>'); // 체크박스 열 추가 */
-	    tr.append('<td>'+data.clubNo+'</td>'); // ID 열 추가
-	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 열 추가
-	    tr.append('<td><div class="categories-table-img"><img src="'+data.clubImage+'" alt="category"></div></td>'); // 이미지 열 추가
-	    tr.append('<td>'+data.clubInfo+'</td>'); // 상태 열 추가
-	    tr.append('<td>'+data.clubLoc+'</td>'); // 위치 열 추가
+	    tr.append('<td>'+data.clubNo+'</td>'); // 동아리 ID 
+	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 
+	    tr.append('<td><div class="categories-table-img"><img src="'+data.clubImage+'" alt="category"></div></td>'); // 동아리 이미지
+	    tr.append('<td>'+data.clubInfo+'</td>'); //동아리 정보
+	    tr.append('<td>'+data.clubLoc+'</td>');  //동아리 위치
 	    if(data.useYn == 'Y'){
-	        tr.append('<td style="text-align:center"><span>'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
+	        tr.append('<td style="text-align:center"><span class="badge-active">'+data.useYn+'</span></td>'); // 동아리 활성화 여부
 	    }else{
-	        tr.append('<td><span class="badge-active" style="cursor:pointer" onclick="updateUseYn('+data.clubNo+')">'+data.useYn+'</span></td>'); // 활성화 여부 열 추가
+	        tr.append('<td><span class="badge-active" style="cursor:pointer; color:red; background-color:blanchedalmond;" onclick="updateUseYn('+data.clubNo+')">'+data.useYn+'</span></td>'); // 활성화 여부 
 	    }
-	    tr.append('<td>'+data.categoryName+'</td>'); // 카테고리 열 추가
-	    tr.append('<td>'+data.createdAt+'</td>'); // 생성일 열 추가
-	    tr.append('<td>'+data.modifiedAt+'</td>'); // 수정일 열 추가
+	    tr.append('<td>'+data.categoryName+'</td>'); // 카테고리 
+	    tr.append('<td>'+data.createdAt+'</td>'); // 생성일 
+	    tr.append('<td>'+data.modifiedAt+'</td>'); // 수정일 
 	    
-	    tbody.append(tr); // 행을 테이블에 추가합니다.
+	    tbody.append(tr); 
 }
  function updateUseYn(clubNo){
 	 console.log("clubNo: "+ clubNo);

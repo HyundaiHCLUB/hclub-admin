@@ -1,6 +1,7 @@
 package site.hclub.hyndai.domain;
 
 import lombok.Data;
+import site.hclub.hyndai.dto.CommonDTO;
 
 /**
  * @author 김은솔
@@ -12,7 +13,7 @@ import lombok.Data;
  * ===========================
  */
 @Data
-public class ClubVO {
+public class ClubVO extends CommonDTO{
 
 	/**
 	 동아리 번호

@@ -22,7 +22,9 @@
          FROM(
        		<include refid="getClubBase"></include>
        	)T1
-       	WHERE ROWNUM BETWEEN 1 AND 10
+       	WHERE 1 = 1
+		
+       	 AND ROWNUM BETWEEN 1 AND 10
     
     </select>
     <sql id="getClubBase">
@@ -40,6 +42,10 @@
 		 FROM CLUB  C
 	     INNER JOIN CATEGORY CA
 	     ON CA.category_id = C.CATEGORY_ID
+	     WHERE 1 = 1
+	     <if test="searchParams != null and searchParams != ''">
+      			AND C.CLUB_NAME LIKE '%' ||  #{searchParams} || '%'
+    	 </if> 
 	     order by clubNo desc
     </sql>
     <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">

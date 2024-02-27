@@ -65,10 +65,11 @@
    <nav class="main-nav--bg">
    <div class="container main-nav">
 	   <div class="main-nav-start">
-	   <div class="search-wrapper">
+	   <div class="search-wrapper" style="margin-left:50px; display:inline-block;">
 	       <i data-feather="search" aria-hidden="true"></i>
-	        <input type="text" placeholder="Enter keywords ..." required>
+	        <input type="text" placeholder="사원 이름으로 검색하세요" id="search" required>
 	    </div>
+	    <div style="display:inline-block; cursor:pointer;"><input type="button" value="검색" style="font-weight:bold; cursor:pointer; color:dodgerblue;" onclick="getRankingList()"></div>
 	   </div>  
 	</div>
    </nav>
@@ -87,7 +88,7 @@
                     <th>사원번호</th>
                     <th>사원 사진</th>
                     <th>아이디</th>
-                    <th>이름</th>
+                    <th>사원 이름</th>
                     <th>레이팅 점수</th>
                     <th>경기 횟수</th>
                   </tr>
@@ -122,14 +123,26 @@
             </div>
     	</div>
     </div>
+    <div id="paging">
+    </div>
   </div>
  <script>
  $(document).ready(function() {
+	 $('#search').on('keypress', function(e) {
+	        if(e.which === 13) {
+	            e.preventDefault();
+	            getRankingList();
+	        }
+	  });
  
  });
- getRankingList();
+ getRankingList(); //초기 랭킹리스트 조회
+ 
  function getRankingList() { 
 	    var params = {}; // 
+	    params.searchParams= $("#search").val();
+	    
+	    console.log(params);
 		$.ajax({
 			type: 'POST',
 			/* headers: {
@@ -142,7 +155,7 @@
 	            console.log('개인 랭킹 리스트 정보 가져오기 성공');
 	            //console.log(response.data);
 	            var list = response.data;
-	            
+	            $('#dataTbody').empty();
 	            for(var i = 0 ; i < list.length; i++){
 	            	appendDataToTable(list[i]);
 	            }
@@ -162,12 +175,10 @@
 	    tr.append('<td><div class="categories-table-img"><img src="'+data.memberImage+'" alt="category"></div></td>');
 	    tr.append('<td>'+data.memberId+'</td>'); // 아이디
 	    tr.append('<td>'+data.employeeName+'</td>'); // 이름
+	    tr.append('<td>'+data.memberRating+'</td>'); // 카테고리
+	    tr.append('<td>'+data.matchNum+'</td>'); // 회원가입일 
 	   
-	    tr.append('<td>'+data.memberRating+'</td>'); // 카테고리 열 추가
-	    tr.append('<td>'+data.matchNum+'</td>'); // 회원가입일 열 추가
-	   
-	    
-	    tbody.append(tr); // 행을 테이블에 추가합니다.
+	    tbody.append(tr); 
 	}
 
 

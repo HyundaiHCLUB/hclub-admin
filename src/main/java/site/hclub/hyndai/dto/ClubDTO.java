@@ -12,7 +12,7 @@ import lombok.Data;
  * ===========================
  */
 @Data
-public class ClubDTO {
+public class ClubDTO extends CommonDTO{
 
 	/**
 	 동아리 번호
