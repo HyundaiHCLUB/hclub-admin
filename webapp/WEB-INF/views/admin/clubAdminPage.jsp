@@ -65,7 +65,7 @@
             </ul>
             <ul class="sidebar-body-menu">
                 <li>
-                    <a class="active" href="/admin/rankAdminPage"><span class="icon user-3" aria-hidden="true"></span>개인랭킹 관리</a>
+                    <a class="active" href="/admin/rankAdminPage"><span class="icon user-3" aria-hidden="true"></span>회원목록 관리</a>
                 </li>
             </ul>
           
@@ -85,7 +85,7 @@
 	</div>
    </nav>
    <div class="container">
-   <div id="deleteButton" onclic="deleteClub()">삭제</div>
+   <!-- <div id="deleteButton" onclick="deleteClub()">삭제</div> -->
     <div class="row">
     	
     	<div class="col-lg-9" style="margin: 0px 0px 0px 50px">  
@@ -93,11 +93,11 @@
               <table class="posts-table">
                 <thead>
                   <tr class="users-table-info">
-                  	<th>
+                  <!-- 	<th>
                       <label class="users-table__checkbox ms-20">
                         <input type="checkbox" class="check-all">
                       </label>
-                    </th>
+                    </th> -->
                     <th>번호</th>
                     <th>동아리 이름</th>
                     <th>동아리 사진</th>
@@ -176,10 +176,10 @@
 	    var tbody = $('#dataTbody'); // 테이블의 tbody 요소를 선택합니다. 해당 테이블 ID에 맞게 변경해야 합니다.
 	   
 	    var tr = $('<tr>'); 
-	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check" name="check"></label></td>'); // 체크박스 열 추가
+	   /*  tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check" name="check" value="'+data.clubNo+'"></label></td>'); // 체크박스 열 추가 */
 	    tr.append('<td>'+data.clubNo+'</td>'); // ID 열 추가
 	    tr.append('<td>'+data.clubName+'</td>'); // 동아리명 열 추가
-	    tr.append('<td><div class="categories-table-img"><picture><source srcset="${pageContext.request.contextPath}/resources/img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture></div></td>'); // 이미지 열 추가
+	    tr.append('<td><div class="categories-table-img"><img src="'+data.clubImage+'" alt="category"></div></td>'); // 이미지 열 추가
 	    tr.append('<td>'+data.clubInfo+'</td>'); // 상태 열 추가
 	    tr.append('<td>'+data.clubLoc+'</td>'); // 위치 열 추가
 	    if(data.useYn == 'Y'){
@@ -215,9 +215,34 @@
 	    });
 	} 
  }
- function deleteClub(){
-	 
- }
+ function deleteClub() {
+	    var clubNoList = [];
+	    
+	    var checkArr = $("[name='check']:checked");
+	    for(var i = 0 ; i < checkArr.length; i++) {
+	        clubNoList.push(checkArr[i].value);
+	    }
+	    
+	    var result = window.confirm("해당 동아리를 삭제 하시겠습니까??");
+
+		if (result) {	    
+		    $.ajax({
+		        type: 'DELETE',
+		        url: '/admin/club',
+		        data: JSON.stringify(clubNoList),
+		        contentType: 'application/json',
+		        success: function(response) {
+		            console.log('동아리 정보 삭제 성공');
+		            
+		            getClubList();//동아리목록 삭제 후 재 로딩
+		        },
+		        error: function(xhr, status, error) {
+		            console.error('동아리 정보 삭제 실패:', error);
+	        	}
+         });
+		}
+}
+
 
  </script>
 </body>

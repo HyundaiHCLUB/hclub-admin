@@ -53,7 +53,7 @@
             </ul>
             <ul class="sidebar-body-menu">
                 <li>
-                    <a class="active" href="/admin/rankAdminPage"><span class="icon user-3" aria-hidden="true"></span>개인랭킹 관리</a>
+                    <a class="active" href="/admin/rankAdminPage"><span class="icon user-3" aria-hidden="true"></span>회원목록 관리</a>
                 </li>
             </ul>
           
@@ -79,15 +79,15 @@
               <table class="posts-table">
                 <thead>
                   <tr class="users-table-info">
-                  	<th>
+                  	<!-- <th>
                       <label class="users-table__checkbox ms-20">
                         <input type="checkbox" class="check-all">
                       </label>
-                    </th>
+                    </th> -->
                     <th>사원번호</th>
+                    <th>사원 사진</th>
                     <th>아이디</th>
                     <th>이름</th>
-                    <th>사원 사진</th>
                     <th>레이팅 점수</th>
                     <th>경기 횟수</th>
                   </tr>
@@ -157,11 +157,12 @@
 	 
 	    var tr = $('<tr>'); 
 
-	    tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check"></label></td>'); // 체크박스 열 추가
+	   /*  tr.append('<td><label class="users-table__checkbox"><input type="checkbox" class="check"></label></td>'); // 체크박스 열 추가 */
 	    tr.append('<td>'+data.employeeNo+'</td>'); // 사원번호
+	    tr.append('<td><div class="categories-table-img"><img src="'+data.memberImage+'" alt="category"></div></td>');
 	    tr.append('<td>'+data.memberId+'</td>'); // 아이디
 	    tr.append('<td>'+data.employeeName+'</td>'); // 이름
-	    tr.append('<td>'+data.memberImage+'</td>'); // 이미지
+	   
 	    tr.append('<td>'+data.memberRating+'</td>'); // 카테고리 열 추가
 	    tr.append('<td>'+data.matchNum+'</td>'); // 회원가입일 열 추가
 	   
