@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hclub.hyndai.mapper.MemberMapper">
+
+	<select id="getRatingRankList" parameterType="site.hclub.hyndai.dto.MemberDTO" resultType="site.hclub.hyndai.dto.MemberDTO">
+		 SELECT 
+		 	 ROWNUM 
+        	, T1.memberNo
+        	, T1.memberId
+        	, T1.memberImage
+        	, T1. memberInterest
+        	, T1.memberRating
+        	, T1.employeeNo
+        	, T1.adminYn
+        	, T1.matchNum
+        	, E.EMPLOYEE_NAME AS employeeName
+		 FROM (
+			<include refid="getMemberBase"></include>
+		 ) T1
+		 INNER JOIN EMPLOYEE E
+    	ON E.EMPLOYEE_NO = T1.employeeNo
+    	 WHERE 1 = 1
+		  <if test="searchParams != null and searchParams != ''">
+      			AND  E.EMPLOYEE_NAME LIKE '%' ||  #{searchParams} || '%'
+    	  </if>
+		
+	</select>
+	<sql id="getMemberBase">
+	  SELECT 
+		    M.MEMBER_NO as memberNo
+		    , M.MEMBER_ID as memberId
+		    , NVL(M.MEMBER_IMAGE, 'https://h-clubbucket.s3.ap-northeast-2.amazonaws.com/profile/242474.jpg') as memberImage
+		    , M.MEMBER_INTEREST as memberInterest
+		    , M.MEMBER_RATING as memberRating
+		    , M.EMPLOYEE_NO as employeeNo
+		    , M.MEMBER_PW as memberPw
+		    , M.ADMIN_YN as adminYn
+            , (SELECT  COUNT(*)
+                FROM MEMBER_TEAM MT
+                WHERE MT.MEMBER_NO = M.MEMBER_NO
+             ) AS matchNum
+		FROM MEMBER M
+		ORDER BY M.MEMBER_NO DESC 
+	</sql>
+</mapper>

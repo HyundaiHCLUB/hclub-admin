@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.hclub.hyndai.mapper.ClubMapper">
+
+    <select id="getClubList" resultType="site.hclub.hyndai.dto.ClubDTO"
+            parameterType="site.hclub.hyndai.domain.ClubVO">
+            
+         SELECT  
+         	ROWNUM
+         	, T1.clubNo
+         	, T1.clubName
+         	, T1.clubImage
+         	, T1.clubInfo
+         	, T1.clubLoc
+         	, T1.createdAt
+         	, T1.modifiedAt
+         	, T1.useYn
+         	, T1.categoryId
+         	, T1.categoryName
+         FROM(
+       		<include refid="getClubBase"></include>
+       	)T1
+       	WHERE 1 = 1
+		
+       	 AND ROWNUM BETWEEN 1 AND 10
+    
+    </select>
+    <sql id="getClubBase">
+	  SELECT
+	         C.CLUB_NO AS clubNo
+		     , C.CLUB_NAME as clubName
+		     , NVL(C.CLUB_IMAGE, 'https://h-clubbucket.s3.ap-northeast-2.amazonaws.com/club/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA%2B2024-02-23%2B%25E1%2584%258B%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A5%25E1%2586%25AB%2B10.24.06.png') as clubImage
+		     , C.CLUB_INFO as clubInfo
+		     , C.CLUB_LOC as clubLoc
+		     , TO_CHAR(C.CREATED_AT,'YYYY-MM-DD') as createdAt
+		     , TO_CHAR(C.MODIFIED_AT,'YYYY-MM-DD') as modifiedAt
+		     , C.USE_YN as useYn
+		     , C.CATEGORY_ID as categoryId
+	         , CA.CATEGORY_NAME AS categoryName
+		 FROM CLUB  C
+	     INNER JOIN CATEGORY CA
+	     ON CA.category_id = C.CATEGORY_ID
+	     WHERE 1 = 1
+	     <if test="searchParams != null and searchParams != ''">
+      			AND C.CLUB_NAME LIKE '%' ||  #{searchParams} || '%'
+    	 </if> 
+	     order by clubNo desc
+    </sql>
+    <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
+    	SELECT 
+    		COUNT(*) 
+    	FROM(
+    		<include refid="getClubBase"></include>
+    	)T1
+    </select>
+    <delete id="deleteClubInfo" parameterType="String">
+    	DELETE 
+    	FROM	CLUB
+    		WHERE CLUB_NO = #{clubNo}
+    </delete>
+    <update id="updateClubUseYn" parameterType="String">
+    	UPDATE
+    		CLUB
+    	SET 
+    		USE_YN = 'Y'
+    	WHERE CLUB_NO = #{clubNo}
+    </update>
+
+
+</mapper>

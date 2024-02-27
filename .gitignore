@@ -152,3 +152,8 @@ application.yml
 .idea
 .idea/compiler.xml
 target/
+
+.classpath
+.project
+org.eclipse.jdt.core.prefs
+org.eclipse.wst.common.*
