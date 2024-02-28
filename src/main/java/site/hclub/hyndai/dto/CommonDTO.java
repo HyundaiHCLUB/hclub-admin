@@ -26,4 +26,9 @@ public class CommonDTO {
 	 검색어
 	*/
 	private String searchParams;
+	
+	/**
+	 ROWNUM
+	*/
+	private String rn;
 }
