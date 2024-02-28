@@ -6,25 +6,25 @@
 
     <select id="getClubList" resultType="site.hclub.hyndai.dto.ClubDTO"
             parameterType="site.hclub.hyndai.domain.ClubVO">
-            
-         SELECT  
-         	ROWNUM
-         	, T1.clubNo
-         	, T1.clubName
-         	, T1.clubImage
-         	, T1.clubInfo
-         	, T1.clubLoc
-         	, T1.createdAt
-         	, T1.modifiedAt
-         	, T1.useYn
-         	, T1.categoryId
-         	, T1.categoryName
-         FROM(
-       		<include refid="getClubBase"></include>
-       	)T1
-       	WHERE 1 = 1
-		
-       	 AND ROWNUM BETWEEN 1 AND 10
+          
+         SELECT * FROM( 
+	         SELECT  
+	         	ROWNUM as rn
+	         	, T1.clubNo
+	         	, T1.clubName
+	         	, T1.clubImage
+	         	, T1.clubInfo
+	         	, T1.clubLoc
+	         	, T1.createdAt
+	         	, T1.modifiedAt
+	         	, T1.useYn
+	         	, T1.categoryId
+	         	, T1.categoryName
+	         FROM(
+	       		<include refid="getClubBase"></include>
+	       	)T1
+       	)T2
+       	WHERE T2.rn BETWEEN #{startIndex} AND #{endIndex}
     
     </select>
     <sql id="getClubBase">

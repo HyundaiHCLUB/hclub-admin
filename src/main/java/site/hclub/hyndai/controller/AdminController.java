@@ -89,5 +89,10 @@ public class AdminController {
 		 return ApiResponse.success(GET_MEMBER_LIST_SUCCESS, MemberService.getRatingRankList(mdto));
 	
 	 }
+	 @PostMapping("/rankCnt")
+	 public ResponseEntity<ApiResponse<Integer>> getMemberCnt(@RequestBody MemberDTO mdto) {
+		 
+		 return ApiResponse.success(GET_CLUB_LIST_CNT_SUCCESS, MemberService.getMemberCnt(mdto));
+	 }
 	 
 }

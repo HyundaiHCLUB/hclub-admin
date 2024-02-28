@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import site.hclub.hyndai.domain.ClubVO;
 import site.hclub.hyndai.dto.ClubDTO;
+import site.hclub.hyndai.dto.MemberDTO;
 import site.hclub.hyndai.mapper.ClubMapper;
 
 @Service
@@ -34,5 +35,6 @@ public class ClubServiceImpl implements ClubService {
 		
 		return clubMapper.updateClubUseYn(clubNo);
 	}
+	
 
 }
