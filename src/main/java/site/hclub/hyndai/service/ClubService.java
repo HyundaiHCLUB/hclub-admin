@@ -3,6 +3,7 @@ import java.util.List;
 
 import site.hclub.hyndai.domain.ClubVO;
 import site.hclub.hyndai.dto.ClubDTO;
+import site.hclub.hyndai.dto.MemberDTO;
 
 /**
  * @author 김은솔
@@ -36,4 +37,6 @@ public interface ClubService {
 	 처리 내용: 동아리 승인여부를 업데이트 한다.
 	*/
 	int updateClubUseYn(String clubNo);
+	
+
 }

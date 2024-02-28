@@ -20,4 +20,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getRatingRankList(mdto);
 	}
 
+	@Override
+	public int getMemberCnt(MemberDTO mdto) {
+		
+		return memberMapper.getMemberCnt(mdto);
+	}
+
 }

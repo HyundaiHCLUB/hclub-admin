@@ -5,27 +5,23 @@
 <mapper namespace="site.hclub.hyndai.mapper.MemberMapper">
 
 	<select id="getRatingRankList" parameterType="site.hclub.hyndai.dto.MemberDTO" resultType="site.hclub.hyndai.dto.MemberDTO">
-		 SELECT 
-		 	 ROWNUM 
-        	, T1.memberNo
-        	, T1.memberId
-        	, T1.memberImage
-        	, T1. memberInterest
-        	, T1.memberRating
-        	, T1.employeeNo
-        	, T1.adminYn
-        	, T1.matchNum
-        	, E.EMPLOYEE_NAME AS employeeName
-		 FROM (
-			<include refid="getMemberBase"></include>
-		 ) T1
-		 INNER JOIN EMPLOYEE E
-    	ON E.EMPLOYEE_NO = T1.employeeNo
-    	 WHERE 1 = 1
-		  <if test="searchParams != null and searchParams != ''">
-      			AND  E.EMPLOYEE_NAME LIKE '%' ||  #{searchParams} || '%'
-    	  </if>
-		
+		SELECT * FROM(
+			 SELECT 
+			 	 ROWNUM as rn
+	        	, T1.memberNo
+	        	, T1.memberId
+	        	, T1.memberImage
+	        	, T1. memberInterest
+	        	, T1.memberRating
+	        	, T1.employeeNo
+	        	, T1.adminYn
+	        	, T1.matchNum
+	        	, T1.employeeName
+			 FROM (
+				<include refid="getMemberBase"></include>
+			 ) T1
+		 )T2
+       	WHERE T2.rn BETWEEN #{startIndex} AND #{endIndex}
 	</select>
 	<sql id="getMemberBase">
 	  SELECT 
@@ -41,7 +37,21 @@
                 FROM MEMBER_TEAM MT
                 WHERE MT.MEMBER_NO = M.MEMBER_NO
              ) AS matchNum
+            , E.EMPLOYEE_NAME AS employeeName
 		FROM MEMBER M
+		INNER JOIN EMPLOYEE E
+    	ON E.EMPLOYEE_NO = M.EMPLOYEE_NO
+    	WHERE 1 = 1
+    	<if test="searchParams != null and searchParams != ''">
+      		AND E.EMPLOYEE_NAME LIKE '%' ||  #{searchParams} || '%'
+    	</if> 
 		ORDER BY M.MEMBER_NO DESC 
 	</sql>
+	<select id="getMemberCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
+    	SELECT 
+    		COUNT(*) 
+    	FROM(
+    		<include refid="getMemberBase"></include>
+    	)T1
+    </select>
 </mapper>
