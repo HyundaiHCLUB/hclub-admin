@@ -28,25 +28,25 @@
     
     </select>
     <sql id="getClubBase">
-	  SELECT
-	         C.CLUB_NO AS clubNo
-		     , C.CLUB_NAME as clubName
-		     , NVL(C.CLUB_IMAGE, 'https://h-clubbucket.s3.ap-northeast-2.amazonaws.com/club/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA%2B2024-02-23%2B%25E1%2584%258B%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A5%25E1%2586%25AB%2B10.24.06.png') as clubImage
-		     , C.CLUB_INFO as clubInfo
-		     , C.CLUB_LOC as clubLoc
-		     , TO_CHAR(C.CREATED_AT,'YYYY-MM-DD') as createdAt
-		     , TO_CHAR(C.MODIFIED_AT,'YYYY-MM-DD') as modifiedAt
-		     , C.USE_YN as useYn
-		     , C.CATEGORY_ID as categoryId
-	         , CA.CATEGORY_NAME AS categoryName
-		 FROM CLUB  C
-	     INNER JOIN CATEGORY CA
-	     ON CA.category_id = C.CATEGORY_ID
-	     WHERE 1 = 1
-	     <if test="searchParams != null and searchParams != ''">
-      			AND C.CLUB_NAME LIKE '%' ||  #{searchParams} || '%'
-    	 </if> 
-	     order by clubNo desc
+		SELECT
+		    C.CLUB_NO AS clubNo,
+		    C.CLUB_NAME AS clubName,
+		    NVL(C.CLUB_IMAGE, 'https://h-clubbucket.s3.ap-northeast-2.amazonaws.com/club/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA%2B2024-02-23%2B%25E1%2584%258B%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A5%25E1%2586%25AB%2B10.24.06.png') AS clubImage,
+		    C.CLUB_INFO AS clubInfo,
+		    C.CLUB_LOC AS clubLoc,
+		    TO_CHAR(C.CREATED_AT,'YYYY-MM-DD') AS createdAt,
+		    TO_CHAR(C.MODIFIED_AT,'YYYY-MM-DD') AS modifiedAt,
+		    C.USE_YN AS useYn,
+		    C.CATEGORY_ID AS categoryId,
+		    CA.CATEGORY_NAME AS categoryName
+		FROM 
+		    CLUB C
+		INNER JOIN 
+		    CATEGORY CA ON CA.category_id = C.CATEGORY_ID
+		WHERE 
+		    (#{searchParams} IS NULL OR #{searchParams} = '' OR C.CLUB_NAME LIKE '%' || #{searchParams} || '%')
+		ORDER BY 
+		    clubNo DESC
     </sql>
     <select id="getClubCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
     	SELECT 
