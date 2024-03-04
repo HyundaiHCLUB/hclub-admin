@@ -61,11 +61,15 @@
     		WHERE CLUB_NO = #{clubNo}
     </delete>
     <update id="updateClubUseYn" parameterType="String">
-    	UPDATE
-    		CLUB
-    	SET 
-    		USE_YN = 'Y'
-    	WHERE CLUB_NO = #{clubNo}
+    	DECLARE
+		    v_club_no CLUB.club_no%TYPE := #{clubNo};
+		BEGIN
+		    UPDATE CLUB
+		    SET USE_YN = 'Y'
+		    WHERE CLUB_NO = v_club_no;
+		    
+		    COMMIT;
+		END;
     </update>
 
 
