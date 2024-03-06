@@ -27,7 +27,7 @@
 	  SELECT 
 	    M.MEMBER_NO AS memberNo,
 	    M.MEMBER_ID AS memberId,
-	    NVL(M.MEMBER_IMAGE, 'https://h-clubbucket.s3.ap-northeast-2.amazonaws.com/profile/242474.jpg') AS memberImage,
+	    M.MEMBER_IMAGE AS memberImage,
 	    M.MEMBER_INTEREST AS memberInterest,
 	    M.MEMBER_RATING AS memberRating,
 	    M.EMPLOYEE_NO AS employeeNo,
