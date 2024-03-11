@@ -46,8 +46,7 @@
 	WHERE 
 	    (#{searchParams} IS NULL OR #{searchParams} = '' OR E.EMPLOYEE_NAME LIKE '%' || #{searchParams} || '%')
 	ORDER BY 
-	    M.MEMBER_NO DESC
-
+	    M.MEMBER_RATING DESC, M.MEMBER_NO DESC
 	</sql>
 	<select id="getMemberCnt" resultType="int" parameterType="site.hclub.hyndai.domain.ClubVO">
     	SELECT 
